@@ -5,6 +5,11 @@ import Info from './components/Info';
 import UserList from './components/UserList';
 import Secured from './components/Secured';
 import RegisterForm from './components/RegisterForm';
+import LoginForm from './components/LoginForm';
+import Categories from './components/Categories';
+import CategoryProducts from './components/CategoryProducts';
+import Account from './components/Account';
+import Bucket from './components/Bucket';
 function App() {
   return (
     <Router>
@@ -15,6 +20,13 @@ function App() {
           <Route path="/info" element={<Info />} />
           <Route path="/secured" element={<Secured />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/auth" element={<LoginForm />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/bucket" element={<Bucket />} />
+
+          <Route path="/categories/:category" element={<CategoryProducts />} />
+
           
         </Routes>
       </div>

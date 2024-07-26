@@ -8,7 +8,11 @@ const Secured = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/secured');
+                const response = await axios.get('http://localhost:8080/api/secured', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
                 setData(response.data);
             } catch (err) {
                 setError('Error fetching data');

@@ -7,10 +7,8 @@ function Home() {
     <div>
       <Header />
       <h1>Главная страница</h1>
-      <Link to="/info">
-        <button>Info</button>
-      </Link>
-      <br></br>
+ 
+
       <Link to="/secured">
         <button>SECURED</button>
       </Link>
@@ -21,6 +19,22 @@ function Home() {
       <br></br>
       <Link to="/register">
         <button>Register</button>
+      </Link>
+      <br></br>
+      <Link to="/auth">
+        <button>authentication</button>
+      </Link>
+      <br></br>
+      <Link to="/categories">
+        <button>categories</button>
+      </Link>
+      <br></br>
+      <Link to="/account">
+        <button>Account page</button>
+      </Link>
+      <br></br>
+      <Link to="/bucket">
+        <button>Bucket</button>
       </Link>
     </div>
   );

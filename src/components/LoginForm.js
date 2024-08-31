@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ const LoginForm = () => {
       const token = response.data;
       localStorage.setItem('token', token);
       
-      setMessage('Вход успешен!');
+      navigate('/');
     } catch (error) {
       console.error('Ошибка входа:', error);
       setMessage('Ошибка входа. Попробуйте снова.');

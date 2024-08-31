@@ -10,6 +10,7 @@ import Categories from './components/Categories';
 import CategoryProducts from './components/CategoryProducts';
 import Account from './components/Account';
 import Bucket from './components/Bucket';
+import Orders from './components/Orders';
 function App() {
   return (
     <Router>
@@ -24,6 +25,8 @@ function App() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/account" element={<Account />} />
           <Route path="/bucket" element={<Bucket />} />
+          <Route path="/orders" element={<Orders />} />
+
 
           <Route path="/categories/:category" element={<CategoryProducts />} />
 

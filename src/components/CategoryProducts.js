@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Back from './Back';
+import { Link } from 'react-router-dom';
 
 const CategoryProducts = () => {
   const { category } = useParams();
@@ -50,7 +50,8 @@ const CategoryProducts = () => {
           </li>
         ))}
       </ul>
-      <Back />
+      <Link to="/categories"><button>Back</button></Link>
+
     </div>
   );
 };

@@ -13,11 +13,19 @@ const Buy = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      
-      // Обработка успешного ответа
+
+      // Парсинг строки productIds
+      const productIdsString = response.data.productIds;
+      const productEntries = productIdsString.split('|').filter(entry => entry); // Удаляем пустые строки
+      const products = productEntries.map(entry => {
+        const [name, quantity] = entry.split(':');
+        return { name, quantity: parseInt(quantity, 10) };
+      });
+
+      // Установка данных в состояние
       setOrderDetails({
         sum: response.data.sum,
-        createdAt: response.data.created_at
+        products: products
       });
       setError(''); // Очистить предыдущие ошибки
     } catch (err) {
@@ -35,7 +43,22 @@ const Buy = () => {
         <div>
           <h3>Order Details</h3>
           <p><strong>Sum:</strong> ${orderDetails.sum.toFixed(2)}</p>
-          <p><strong>Created At:</strong> {new Date(orderDetails.createdAt).toLocaleString()}</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderDetails.products.map((product, index) => (
+                <tr key={index}>
+                  <td>{product.name}</td>
+                  <td>{product.quantity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
       {error && <p>{error}</p>}

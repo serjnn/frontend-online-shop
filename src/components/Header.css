@@ -1,0 +1,51 @@
+/* Header.css */
+
+.header {
+    background-color: #f8f9fa; /* Цвет фона шапки */
+    padding: 10px 20px; /* Внутренние отступы */
+    border-bottom: 1px solid #e0e0e0; /* Цвет и стиль нижней границы шапки */
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-info, .auth-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info p, .auth-links a {
+    margin: 0 10px;
+  }
+  
+  nav {
+    display: flex;
+    gap: 10px; /* Пробел между ссылками */
+  }
+  
+  button {
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Цвет фона кнопки при наведении */
+  }
+  
+  .error {
+    color: red; /* Цвет текста ошибки */
+  }
+  
+  .divider {
+    margin-top: 10px; /* Отступ сверху для линии */
+    border: none;
+    border-top: 1px solid #e0e0e0; /* Цвет и стиль линии */
+  }
+  

@@ -14,7 +14,7 @@ const RegisterForm = () => {
     
     try {
       // Отправка данных на сервер
-      const response = await axios.post('http://localhost:8080/api/register', {
+      const response = await axios.post('http://localhost:8989/client/api/v1/register', {
         mail,
         password,
         role

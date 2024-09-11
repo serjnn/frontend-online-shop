@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from './UserContext'; // Импортируйте созданный контекст
 import './Header.css'; // Подключите файл стилей
+import axios from 'axios';
+
 
 const Header = () => {
-  const [userInfo, setUserInfo] = useState(null);
-  const [error, setError] = useState('');
+  const { user, setUser } = useUser(); // Используем контекст
+  const [error, setError] = React.useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,49 +15,51 @@ const Header = () => {
       const token = localStorage.getItem('token');
 
       if (!token) {
-        setUserInfo(null);
+        setUser(null);
         return;
       }
 
       try {
-        const response = await axios.get('http://localhost:8080/api/myInfo', {
+        const response = await axios.get('http://localhost:8989/client/api/v1/myInfo', {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
 
-        setUserInfo({
+        setUser({
+          address: response.data.address,
           mail: response.data.mail,
-          balance: response.data.balance
+          balance: response.data.balance,
+          id: response.data.id // Добавьте id, если нужно
         });
       } catch (err) {
         setError('Error fetching user info');
-        setUserInfo(null); // Очистить данные пользователя при ошибке
+        setUser(null); // Очистить данные пользователя при ошибке
       }
     };
 
     fetchUserInfo();
-  }, []);
+  }, [setUser]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setUserInfo(null);
+    setUser(null);
     navigate('/'); // Перенаправление на страницу входа
   };
 
   return (
     <header className="header">
       <div className="header-content">
-        {userInfo ? (
+        {user ? (
           <div className="user-info">
-            <p>Email: {userInfo.mail}</p>
-            <p>Balance: ${userInfo.balance.toFixed(2)}</p>
+            <p>Id: {user.id}</p>
+            <p>Email: {user.mail}</p>
+            <p>Balance: ${user.balance.toFixed(2)}</p>
             <nav>
               <Link to="/categories">Categories</Link>
               <Link to="/account">Account</Link>
               <Link to="/bucket">Bucket</Link>
               <Link to="/orders">Orders</Link>
-              
               <button onClick={handleLogout}>Logout</button>
             </nav>
           </div>

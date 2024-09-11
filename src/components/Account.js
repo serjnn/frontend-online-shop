@@ -1,42 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { useUser } from './UserContext'; // Import useUser to get user context
 import Back from './Back';
+import Header from './Header';
 
 const Account = () => {
-  const [user, setUser] = useState({});
+  const { user, setUser } = useUser(); // Get user data from context
   const [balance, setBalance] = useState('');
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/myInfo', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setUser(response.data);
-      } catch (err) {
-        setError('Error fetching user info');
-      }
-    };
-
-    fetchUserInfo();
-  }, [token]);
-
   const handleAddBalance = async () => {
     try {
-      await axios.post('http://localhost:8080/api/addBalance',null, {
+      await axios.post('http://localhost:8989/client/api/v1/addBalance', null, {
         headers: {
           Authorization: `Bearer ${token}`
         },
         params: {
-            amount: balance
-          }
+          amount: balance
+        }
       });
-      setUser({ ...user, balance: user.balance + Number(balance) });
+      setUser({ ...user, balance: user.balance + Number(balance) }); // Update balance in context
       setBalance('');
     } catch (err) {
       setError('Error adding balance');
@@ -45,15 +30,15 @@ const Account = () => {
 
   const handleChangeAddress = async () => {
     try {
-      await axios.post('http://localhost:8080/api/changeAddress', null, {
+      await axios.post('http://localhost:8989/client/api/v1/changeAddress', null, {
         headers: {
           Authorization: `Bearer ${token}`
         },
         params: {
-            address: address
-          }
+          address: address
+        }
       });
-      setUser({ ...user, address: address });
+      setUser({ ...user, address: address }); // Update address in context
       setAddress('');
     } catch (err) {
       setError('Error changing address');
@@ -62,12 +47,12 @@ const Account = () => {
 
   return (
     <div>
+      <Header />
       <h2>Личный кабинет</h2>
       {error && <p>{error}</p>}
-      <p>ID: {user.id}</p>
-      <p>Почта: {user.mail}</p>
-      <p>Адрес: {user.address}</p>
-      <p>Баланс: {user.balance}</p>
+      <p>Почта: {user?.mail}</p>
+      <p>Адрес: {user?.address}</p>
+      <p>Баланс: {user?.balance}</p>
 
       <div>
         <h3>Пополнить баланс</h3>

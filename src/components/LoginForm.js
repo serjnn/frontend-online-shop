@@ -12,7 +12,7 @@ const LoginForm = () => {
     e.preventDefault();
     
     try {
-      const response = await axios.post('http://localhost:8080/api/auth', {
+      const response = await axios.post('http://localhost:8989/client/api/v1/auth', {
         mail,
         password
       });

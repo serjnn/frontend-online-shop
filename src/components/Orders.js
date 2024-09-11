@@ -1,63 +1,89 @@
-// src/Orders.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useUser } from './UserContext'; // Import the custom hook to access UserContext
+import Header from './Header';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true); // New loading state
+  const { user } = useUser(); // Access the user object from context
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        // Получение токена из локального хранилища
         const token = localStorage.getItem('token');
         
-        // Выполнение GET-запроса с токеном в заголовке
-        const response = await axios.get('http://localhost:8080/api/orders', {
+        // Check if user and clientId are available
+        if (!user || !user.id) {
+          setError('User not authenticated');
+          setLoading(false);
+          return;
+        }
+        
+        // Add user ID in the URL to fetch orders for the specific client
+        const response = await axios.get(`http://localhost:8989/order/api/v1/byClient/${user.id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
         
-        // Обработка успешного ответа
+        // Successful response
         setOrders(response.data);
-        setError(''); // Очистка предыдущих ошибок
+        setError(''); // Clear any previous errors
       } catch (err) {
-        // Обработка ошибки
         setError('Error fetching orders');
-        setOrders([]); // Очистка предыдущих данных заказа
+        setOrders([]); // Clear previous orders on error
+      } finally {
+        setLoading(false); // Set loading to false after fetching is done
       }
     };
 
-    fetchOrders();
-  }, []);
+    if (user && user.id) {
+      fetchOrders(); // Fetch orders only when user and user.id are available
+    } else {
+      setLoading(false);
+    }
+  }, [user]); // Only fetch orders when user is available
+
+  if (loading) {
+    return <p>Loading orders...</p>; // Display loading indicator
+  }
 
   return (
     <div>
+      <Header />
+      <div>
+        <p>User ID: {user.id}</p>
+      </div>
       <h2>Orders</h2>
       {error && <p>{error}</p>}
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Client ID</th>
-            <th>Product IDs</th>
-            <th>Sum</th>
-            <th>Created At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.id}</td>
-              <td>{order.clientId}</td>
-              <td>{order.products_ids}</td>
-              <td>${order.sum.toFixed(2)}</td>
-              <td>{order.created_at}</td>
+      {orders.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Client ID</th>
+              <th>Product IDs</th>
+              <th>Sum</th>
+              <th>Created At</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order.id}>
+                <td>{order.id}</td>
+                <td>{order.clientId}</td>
+                <td>{order.products_ids}</td>
+                <td>${order.sum.toFixed(2)}</td>
+                <td>{new Date(order.created_at).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No orders found for this user.</p>
+      )}
     </div>
   );
 };

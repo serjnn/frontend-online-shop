@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Header from './Header';
 
 const CategoryProducts = () => {
   const { category } = useParams();
@@ -39,6 +40,7 @@ const CategoryProducts = () => {
 
   return (
     <div>
+      <Header />
       <h2>Products in {category}</h2>
       {error && <p>{error}</p>}
       <ul>

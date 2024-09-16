@@ -54,7 +54,6 @@ const Orders = () => {
     <div>
       <Header />
       <div>
-        <p>User ID: {user.id}</p>
       </div>
       <h2>Orders</h2>
       {error && <p>{error}</p>}
@@ -62,8 +61,6 @@ const Orders = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Client ID</th>
               <th>Product IDs</th>
               <th>Sum</th>
               <th>Created At</th>
@@ -72,8 +69,6 @@ const Orders = () => {
           <tbody>
             {orders.map((order) => (
               <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.clientId}</td>
                 <td>{order.products_ids}</td>
                 <td>${order.sum.toFixed(2)}</td>
                 <td>{new Date(order.created_at).toLocaleString()}</td>

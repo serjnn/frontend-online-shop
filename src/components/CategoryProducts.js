@@ -13,12 +13,20 @@ const CategoryProducts = () => {
 
   const handleClick = async (productId) => {
     try {
+      // Get the token from local storage
+      const token = localStorage.getItem('token');
+  
       // Get user id from UserContext (clientId)
-      const clientId = user.id; 
-
-      // Make the GET request to the bucket API
-      const res = await axios.get(`http://localhost:8989/bucket/api/v1/add/${clientId}/${productId}`);
-
+      const clientId = user.id;
+  
+      // Set up headers including the token
+      const headers = {
+        Authorization: `Bearer ${token}`, // Assuming token is a Bearer token
+      };
+  
+      // Make the GET request to the bucket API with headers
+      const res = await axios.get(`http://localhost:8989/bucket/api/v1/add/${clientId}/${productId}`, { headers });
+  
       // Optional: log or update state with server response if needed
       console.log(res.data);
     } catch (error) {

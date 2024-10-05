@@ -11,22 +11,24 @@ const Account = () => {
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
 
+
+  
   const handleAddBalance = async () => {
     try {
-      await axios.post('http://localhost:8989/client/api/v1/addBalance', null, {
+
+      await axios.get(`http://localhost:8989/client/api/v1/addBalance/${user.id}/${balance}`, {
         headers: {
           Authorization: `Bearer ${token}`
-        },
-        params: {
-          amount: balance
         }
-      });
-      setUser({ ...user, balance: user.balance + Number(balance) }); // Update balance in context
+      }); 
+
+      setUser({ ...user, balance: user.balance + Number(balance) }); 
       setBalance('');
     } catch (err) {
       setError('Error adding balance');
     }
   };
+  
 
   const handleChangeAddress = async () => {
     try {
@@ -38,7 +40,7 @@ const Account = () => {
           address: address
         }
       });
-      setUser({ ...user, address: address }); // Update address in context
+      setUser({ ...user, address: address }); 
       setAddress('');
     } catch (err) {
       setError('Error changing address');

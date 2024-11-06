@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from './UserContext'; // Импортируйте созданный контекст
-import './Header.css'; // Подключите файл стилей
+import { useUser } from './UserContext'; 
+import './Header.css'; 
 import axios from 'axios';
 
 
 const Header = () => {
-  const { user, setUser } = useUser(); // Используем контекст
+  const { user, setUser } = useUser(); 
   const [error, setError] = React.useState('');
   const navigate = useNavigate();
 

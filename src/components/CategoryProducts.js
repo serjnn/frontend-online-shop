@@ -3,31 +3,27 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Header from './Header';
-import { useUser } from './UserContext'; // Import the custom hook to access UserContext
+import { useUser } from './UserContext'; 
 
 const CategoryProducts = () => {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
-  const { user } = useUser(); // Access the user object from context
+  const { user } = useUser(); 
 
   const handleClick = async (productId) => {
     try {
-      // Get the token from local storage
       const token = localStorage.getItem('token');
   
-      // Get user id from UserContext (clientId)
+      
       const clientId = user.id;
   
-      // Set up headers including the token
       const headers = {
-        Authorization: `Bearer ${token}`, // Assuming token is a Bearer token
+        Authorization: `Bearer ${token}`, 
       };
   
-      // Make the GET request to the bucket API with headers
       const res = await axios.get(`http://localhost:8989/bucket/api/v1/add/${clientId}/${productId}`, { headers });
   
-      // Optional: log or update state with server response if needed
       console.log(res.data);
     } catch (error) {
       console.error('Error adding product to bucket:', error);

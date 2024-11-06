@@ -2,28 +2,24 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const RegisterForm = () => {
-  // Состояния для полей формы
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [message, setMessage] = useState('');
   
-  // Обработчик отправки формы
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Предотвращаем перезагрузку страницы
+    e.preventDefault();
     
     try {
-      // Отправка данных на сервер
+     
       const response = await axios.post('http://localhost:8989/client/api/v1/register', {
         mail,
         password,
         role
       });
       
-      // Успешная регистрация
       setMessage('Регистрация успешна!');
     } catch (error) {
-      // Обработка ошибок
       console.error('Ошибка регистрации:', error);
       setMessage('Ошибка регистрации. Попробуйте снова.');
     }

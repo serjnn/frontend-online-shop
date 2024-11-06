@@ -14,7 +14,7 @@ const Buy = () => {
         }
       });
 
-      // Парсинг строки productIds
+     
       const productIdsString = response.data.productIds;
       const productEntries = productIdsString.split('|').filter(entry => entry); // Удаляем пустые строки
       const products = productEntries.map(entry => {
@@ -22,16 +22,15 @@ const Buy = () => {
         return { name, quantity: parseInt(quantity, 10) };
       });
 
-      // Установка данных в состояние
+     
       setOrderDetails({
         sum: response.data.sum,
         products: products
       });
-      setError(''); // Очистить предыдущие ошибки
+      setError(''); 
     } catch (err) {
-      // Обработка ошибки
       setError('Error processing purchase');
-      setOrderDetails(null); // Очистить предыдущие данные заказа
+      setOrderDetails(null); 
     }
   };
 

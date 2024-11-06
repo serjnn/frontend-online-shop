@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useUser } from './UserContext'; // Import useUser to get user context
+import { useUser } from './UserContext'; 
 import Back from './Back';
 import Header from './Header';
 
 const Account = () => {
-  const { user, setUser } = useUser(); // Get user data from context
+  const { user, setUser } = useUser(); 
   const [balance, setBalance] = useState('');
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');

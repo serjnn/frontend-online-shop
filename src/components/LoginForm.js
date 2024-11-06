@@ -17,7 +17,7 @@ const LoginForm = () => {
         password
       });
       
-      // Получение и сохранение токена в localStorage
+     
       const token = response.data;
       localStorage.setItem('token', token);
       

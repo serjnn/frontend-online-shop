@@ -1,53 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useUser } from './UserContext'; // Import the custom hook to access UserContext
+import { useUser } from './UserContext';
 import Header from './Header';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true); // New loading state
-  const { user } = useUser(); // Access the user object from context
+  const [loading, setLoading] = useState(true); 
+  const { user } = useUser(); 
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
         
-        // Check if user and clientId are available
+       
         if (!user || !user.id) {
           setError('User not authenticated');
           setLoading(false);
           return;
         }
         
-        // Add user ID in the URL to fetch orders for the specific client
+       
         const response = await axios.get(`http://localhost:8989/order/api/v1/byClient/${user.id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
         
-        // Successful response
+        
         setOrders(response.data);
-        setError(''); // Clear any previous errors
+        setError(''); 
       } catch (err) {
         setError('Error fetching orders');
-        setOrders([]); // Clear previous orders on error
+        setOrders([]); 
       } finally {
-        setLoading(false); // Set loading to false after fetching is done
+        setLoading(false);
       }
     };
 
     if (user && user.id) {
-      fetchOrders(); // Fetch orders only when user and user.id are available
+      fetchOrders(); 
     } else {
       setLoading(false);
     }
-  }, [user]); // Only fetch orders when user is available
+  }, [user]); 
 
   if (loading) {
-    return <p>Loading orders...</p>; // Display loading indicator
+    return <p>Loading orders...</p>; 
   }
 
   return (

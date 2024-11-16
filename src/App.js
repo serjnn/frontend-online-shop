@@ -12,6 +12,7 @@ import Account from './components/Account';
 import Bucket from './components/Bucket';
 import Orders from './components/Orders';
 import { UserProvider } from './components/UserContext';
+import DiscountNotifications from './components/DiscountNotifications';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/bucket" element={<Bucket />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/discounts" element={<DiscountNotifications />} />
+
             <Route path="/categories/:category" element={<CategoryProducts />} />
           </Routes>
         </div>

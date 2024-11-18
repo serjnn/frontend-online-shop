@@ -60,6 +60,8 @@ const Header = () => {
               <Link to="/account">Account</Link>
               <Link to="/bucket">Bucket</Link>
               <Link to="/orders">Orders</Link>
+              <Link to="/discounts">Discounts</Link>
+
               <button onClick={handleLogout}>Logout</button>
             </nav>
           </div>
